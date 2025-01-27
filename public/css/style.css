@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Khula:wght@300;400;600;700;800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Khula", serif;
+}
+
+:root{
+    --main-text-color: #FFBDD4;
+    --button-text-color: #767680;
+
+}
+
+header{
+    background-color: #FDFBF9;
+    display: flex;
+    align-items: center;
+    padding: 1%;
+    justify-content: space-between;
+}
+
+.logo{
+    font-weight: 600;
+    font-style: normal;
+    font-size: 28px;
+    color: var(--main-text-color);
+}
+.nav{
+    display: flex;
+}
+
+.button{
+    display: flex;
+    text-align: center;
+    font-weight: 300;
+    font-style: normal;
+    color: var(--button-text-color) ;
+
+}
+
+.login{
+    padding: 6px 24px;
+    margin-right: 20px;
+    background: transparent;
+    transition: all .6s ease;
+    background: var(--main-text-color);
+    border-radius: 20px;
+  
+}
+
+.cadastro{
+    padding: 6px 24px;
+    margin-right: 10px;
+    background: transparent;
+    transition: all .6s ease;
+    background: #FF95B5;
+    border-radius: 20px;
+}
