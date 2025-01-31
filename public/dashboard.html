@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | EasyBeauty</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <a class="logo">easyBeuty</a>
+    <ul class="nav">
+      <li><a href=""></a></li>
+    </ul>
+    <div class="button">
+      <li><a href="login.html" class="login">Entrar</a></li>
+      <li><a href="casdatro.html" class="cadastro">Cadastrar</a></li>
+    </div>
+  </header>
+  
+</body>
+</html>
+<script>
+    var carrinho = [
+  {
+    idProduto: 1,
+    quantidade: 11,
+  },
+  {
+    idProduto: 3,
+    quantidade: 1,
+  },
+];
+
+/* Validação de Quantidade de Produto no Estoque e o Selecionado */
+function verificarEstoque(idProduto, quantidadeSelecionada) {
+  var quantidadeEstoque = 0;
+
+  quantidadeEstoque = 1;
+
+  if (quantidadeEstoque - quantidadeSelecionada < 0) {
+    return false;
+  }
+
+  return true;
+}
+
+/* Loop para enviar a compra pro BD */
+for (let i = 0; i < carrinho.length; i++) {
+  const idProdutoSelecionado = carrinho[i].idProduto;
+  const QtdProdutoSelecionado = carrinho[i].quantidade;
+
+  const estoqueDisponivel = verificarEstoque(idProdutoSelecionado, QtdProdutoSelecionado);
+
+  if (!estoqueDisponivel) {
+    console.log(
+      `Estoque insuficiente para o produto ID ${idProdutoSelecionado}`
+    );
+  } else {
+    var insertCompra = `
+    INSERT INTO compra(fkUsuario, fkProduto) VALUES 
+    ( idUsuario, ${idProdutoSelecionado}) 
+    `;
+
+    for (let i = 0; i < QtdProdutoSelecionado; i++) {
+      // insertCompra.faz
+      // essaporranobdcaraio()
+    }
+
+    console.log(
+      `O ID é ${idProdutoSelecionado} e a quantidade é ${QtdProdutoSelecionado}`
+    );
+  }
+}
+</script>
