@@ -167,4 +167,10 @@ SELECT p.categoria as Categoria,
   FROM produto as p
   GROUP BY p.categoria
 
-SELECT 
+SELECT p.categoria as Categoria,
+  SUM(p.preco_venda) as 'Valor'
+  FROM produto as p
+  JOIN compra as c 
+  ON c.fkProduto = p.idProduto
+  WHERE c.dtCompra like $dataDesejada
+  GROUP BY p.categoria;
