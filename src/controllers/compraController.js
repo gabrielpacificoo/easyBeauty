@@ -1,14 +1,23 @@
-function arroz(req, res) {
-  return console.log('oi', req, res)
-}
-
 var compraModel = require('../models/compraModel.js')
 
 function obterVendasPorCategoria(req, res) {
-  res.status(400).send('madu')
+
+  console.log('Estou no controller das Compras')
+
+  compraModel.selectVendasPorCategoria()
+  .then((result) => {
+    console.log(result)
+
+    if (result.length > 0) {
+      res.status(200).json(result)
+    }
+
+  }).catch((err) => {
+    console.log(err)
+    
+  });
 }
 
 module.exports = {
-  arroz,
   obterVendasPorCategoria
 }

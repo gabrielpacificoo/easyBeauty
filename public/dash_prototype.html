@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/dashboard_prototype.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>EasyBeauty | Dashboard</title>
+</head>
+
+<body>
+  <div id="teste">
+
+    <section id="navigation_bar">
+      <div id="div_welcome">
+        <p id="span_easybeauty">EasyBeauty</p> 
+        <p id="span_welcome">Seja bem vindo!</p> 
+        <p id="span_username">Gabriel Feitosa Pacifico</p>
+    </div>
+
+    <div id="div_options">
+      <button class="button_option" >Análise de vendas</button>
+      <button class="button_option" >Análise de estoque</button>
+      <button class="button_option" >Análise de funcionários</button>
+    </div> 
+
+    <div id="button_move" onclick="moveNavigationBar()">
+      <img id="svg_arrow" src="./assets/arrow-left-from-line-svgrepo-com.svg" alt="">
+    </div>
+  </section>
+
+  <section id="dashboard_section">
+    <div id="chart_radar">
+      <canvas id="grafico1"></canvas>
+    </div>
+  </section>
+</div>
+
+</body>
+
+</html>
+<script>
+  var boolean_navigation = true;
+  
+  function moveNavigationBar() {
+    var navigationBar = document.getElementById('navigation_bar');
+    var arrow_button = document.getElementById('svg_arrow');
+    var dashboardSection = document.getElementById('dashboard_section');
+  
+    if (!boolean_navigation) {
+      navigationBar.style.transform = 'translateX(0vw)'
+      
+      arrow_button.style.rotate = '0deg'
+      
+      dashboardSection.style.width = 'calc(80vw - 7%)'
+      dashboardSection.style.marginLeft = '20vw'
+      
+      boolean_navigation = true
+    } else {
+      navigationBar.style.transform = 'translateX(-19.5vw)'
+      
+      arrow_button.style.rotate = '180deg'
+
+      dashboardSection.style.width = '99.5vw'
+      dashboardSection.style.marginLeft = '0.5vw'
+      
+      boolean_navigation = false
+    }
+
+  }
+
+  var labelGrafico = []
+  var dataGrafico = []
+
+  var graficoVendasPorCategoria = document.getElementById('grafico1')
+
+  function obterVendasPorCategoria() {
+    fetch('/compra/vendasCategoria', {
+      method: 'get',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+    )
+      /* Quando o fetch for concluido */
+      .then((resposta) => {
+
+        resposta.json()
+          .then((dados) => {
+            console.log(dados)
+
+            for (let i = 0; i < dados.length; i++) {
+              const categoriaAtual = dados[i].Categoria;
+              const valorAtual = dados[i].Valor;
+
+              labelGrafico.push(categoriaAtual)
+              dataGrafico.push(valorAtual)
+            }
+          })
+      }).catch((err) => {
+      })
+  }
+
+  function plotarGrafico() {
+
+    if (dataGrafico.length > 0) {
+      return
+    }
+
+    obterVendasPorCategoria()
+
+    setTimeout(() => {
+      var data = {
+        labels: labelGrafico,
+        datasets: [{
+          label: 'Vendas por Categoria (Reais)',
+          data: dataGrafico,
+          borderColor: 'rgba(255, 228, 239, 1)',
+          borderWidth: '4',
+            backgroundColor: [
+              '#DB7093',  /* Pale Violet Red */
+              '#FFB6C1',   /* Light Pink */
+              '#FFCDDF',  /* Light Pink */
+            '#FFC0CB',  /* Pink */
+            '#FF69B4',  /* Hot Pink */
+        // 'rgb(160, 82, 45)',  /* Cabelos - Sienna */
+        // 'rgb(255, 20, 147)', /* Maquiagem - DeepPink */
+        // 'rgb(255, 224, 189)', /* Pele - PeachPuff */
+        // 'rgb(173, 216, 230)', /* Higiene - LightBlue */
+        // 'rgb(255, 182, 193)'  /* Fragrâncias - LightPink */
+          ]
+        }]
+      };
+      
+      var config = {
+        type: 'doughnut',
+        data: data,
+        options: {
+          plugins: {
+        title: {
+          display: true,
+          text: 'Vendas por Categoria'
+        }
+          }
+        }
+      };
+  
+      const grafico = new Chart(graficoVendasPorCategoria, config);
+
+    }, 1000);
+
+  }
+
+  plotarGrafico()
+</script>
