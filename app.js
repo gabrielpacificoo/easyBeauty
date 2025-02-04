@@ -22,11 +22,11 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 // routes
-// var produtoRouter = require('./src/routes/produto.js')
+var produtoRouter = require('./src/routes/produto.js')
 // var usuarioRouter = require('./src/routes/usuario.js')
 var compraRouter = require('./src/routes/compra.js')
 
-// app.use("/produto", produtoRouter)
+app.use("/produto", produtoRouter)
 // app.use("/usuario", usuarioRouter)
 app.use("/compra", compraRouter)
 

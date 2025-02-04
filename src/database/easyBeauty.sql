@@ -174,3 +174,9 @@ SELECT p.categoria as Categoria,
   ON c.fkProduto = p.idProduto
   WHERE c.dtCompra like $dataDesejada
   GROUP BY p.categoria;
+
+
+  SELECT p.categoria as Categoria,
+  SUM((p.preco_venda * p.qtd_estoque)) as 'ValorEstoque'
+  FROM produto as p
+  GROUP BY p.categoria;
